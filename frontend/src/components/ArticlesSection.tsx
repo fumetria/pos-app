@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
+import type { Article } from "../types/definitions";
 
 function ArticleButton({
   article,
   handleNewArticleLine,
 }: {
-  article: { id: string; name: string; pvp: number };
+  article: Article;
   handleNewArticleLine?: (article: object) => void;
+  isSelected: boolean;
 }) {
   return (
     <>
       <div
         key={article.id}
         onClick={() => handleNewArticleLine(article)}
-        className="grid grid_row_[1fr_auto] bg-stone-100 justify-center items-center size-34 border border-blue-800 cursor-pointer px-1"
+        className="grid grid_row_[1fr_auto] bg-stone-100 justify-items-center items-center size-24 2xl:size-34 cursor-pointer px-1 rounded shadow"
       >
         <div>
           <h3 className="text-3xl text-center font-semibold text-red-600">
@@ -29,21 +31,23 @@ function ArticleButton({
   );
 }
 
-export default function ArticleSection({
+export default function ArticlesSection({
   articles,
   handleNewArticleLine,
+  isSelected,
 }: {
-  articles: object[];
-  handleNewArticleLine?: (article: object) => void;
+  articles: Article[];
+  handleNewArticleLine?: (article: Article) => void;
+  isSelected: boolean;
 }) {
-  const [articlesList, setArticlesList] = useState<object[]>([]);
+  const [articlesList, setArticlesList] = useState<Article[]>([]);
   useEffect(() => {
     setArticlesList(articles);
   }, [articles]);
   return (
     <>
       <section
-        id="article-section"
+        id="articles-section"
         className="flex flex-wrap gap-2 m-2 justify-start items-center"
       >
         {articlesList.length > 0 &&
@@ -52,6 +56,7 @@ export default function ArticleSection({
               key={article.id}
               article={article}
               handleNewArticleLine={() => handleNewArticleLine(article)}
+              isSelected={isSelected}
             />
           ))}
       </section>
