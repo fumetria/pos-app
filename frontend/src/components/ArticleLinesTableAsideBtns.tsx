@@ -1,28 +1,51 @@
-function ASideButton({ label }: { label: string }) {
+import type { ArticleLine } from "../types/definitions";
+
+function AsideButton({
+  label,
+  selectedArticleLine,
+  handleDeleteLine,
+}: {
+  label: string;
+  selectedArticleLine?: ArticleLine;
+  handleDeleteLine?: (articleLine: ArticleLine) => void;
+}) {
   return (
     <>
-      <div className="bg-stone-300 font-semibold h-full w-full flex justify-center items-center cursor-pointer">
+      <div
+        className="bg-stone-300 text-stone-100 font-semibold h-full w-full flex justify-center items-center cursor-pointer"
+        onClick={() => handleDeleteLine(selectedArticleLine)}
+      >
         {label}
       </div>
     </>
   );
 }
 
-export default function ArticleLinesTableAsideBtns() {
+export default function ArticleLinesTableAsideBtns({
+  selectedArticleLine,
+  handleDeleteLine,
+}: {
+  selectedArticleLine: ArticleLine;
+  handleDeleteLine: () => void;
+}) {
   return (
     <>
       <div className="grid grid-rows-[auto_auto_auto_auto] gap-2 h-full w-full p-2 bg-stone-600">
         <div className="row-start-1 row-end-2">
-          <ASideButton label="Eliminar" />
+          <AsideButton
+            label="Eliminar"
+            selectedArticleLine={selectedArticleLine}
+            handleDeleteLine={handleDeleteLine}
+          />
         </div>
         <div className="row-start-2 row-end-3">
-          <ASideButton label="Descripción" />
+          <AsideButton label="Descripción" />
         </div>
         <div className="row-start-3 row-end-4">
-          <ASideButton label="Detalle" />
+          <AsideButton label="Detalle" />
         </div>
         <div className="row-start-4 row-end-5">
-          <ASideButton label="Precio" />
+          <AsideButton label="Precio" />
         </div>
       </div>
     </>

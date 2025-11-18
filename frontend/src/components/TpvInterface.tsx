@@ -96,6 +96,14 @@ export default function TpvInterface() {
     setSelectedArticleLine(article);
   };
 
+  const handleDeleteLine = (selectedArticleLine: ArticleLine) => {
+    console.log("selected article: ", selectedArticleLine);
+    const newArticlesLines = articlesLines.filter(
+      (articleLine) => articleLine.id != selectedArticleLine.id
+    );
+    setArticlesLines(newArticlesLines);
+  };
+
   return (
     <>
       <section
@@ -126,7 +134,10 @@ export default function TpvInterface() {
           />
         </div>
         <div className="col-start-4 col-end-5 row-start-1 row-end-3">
-          <ArticleLinesTableAsideBtns />
+          <ArticleLinesTableAsideBtns
+            selectedArticleLine={selectedArticleLine}
+            handleDeleteLine={handleDeleteLine}
+          />
         </div>
         <div className="col-start-5 col-end-6 row-start-1 row-end-3 bg-stone-300">
           Calculadora
