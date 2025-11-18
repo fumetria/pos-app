@@ -1,18 +1,25 @@
+import type { ArticleLine } from "../types/definitions";
+
 export default function BillLine({
   article,
+  handleSelectArticleLine,
+  isSelected,
 }: {
-  article: {
-    id: string;
-    name: string;
-    details: string;
-    quantity: number;
-    price: number;
-    total: number;
-  };
+  article: ArticleLine;
+  handleSelectArticleLine?: (article: ArticleLine) => void;
+  isSelected?: boolean;
 }) {
   return (
     <>
-      <tr className="text-blue-900" key={article.id}>
+      <tr
+        className={
+          isSelected
+            ? "bg-blue-400 text-stone-100 cursor-pointer"
+            : "text-blue-900 cursor-pointer"
+        }
+        key={article.id}
+        onClick={() => handleSelectArticleLine(article)}
+      >
         <td className="text-center">{article.id}</td>
         <td className="uppercase">{article.name}</td>
         <td>{article.details}</td>
