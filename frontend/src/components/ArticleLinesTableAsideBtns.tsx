@@ -12,7 +12,7 @@ function AsideButton({
   return (
     <>
       <div
-        className="bg-stone-300 text-stone-100 font-semibold h-full w-full flex justify-center items-center cursor-pointer"
+        className="bg-stone-300 text-stone-100 2xl:text-2xl font-semibold h-full w-full flex justify-center items-center cursor-pointer rounded"
         onClick={() => handleDeleteLine(selectedArticleLine)}
       >
         {label}
@@ -30,7 +30,7 @@ export default function ArticleLinesTableAsideBtns({
 }) {
   return (
     <>
-      <div className="grid grid-rows-[auto_auto_auto_auto] gap-2 h-full w-full p-2 bg-stone-600">
+      <div className="grid grid-rows-[auto_auto_auto_auto] gap-2 h-full w-full p-2 bg-stone-600 rounded-e">
         <div className="row-start-1 row-end-2">
           <AsideButton
             label="Eliminar"
