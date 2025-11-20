@@ -7,9 +7,10 @@ import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.tsx";
 import type { Article, ArticleLine } from "../types/definitions.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
+import UpdateForm from "./UpdateForm.tsx";
 
 export default function TpvInterface() {
-  const [articlesList, setArticlesList] = useState<object[]>([]);
+  const [articlesList, setArticlesList] = useState<Article[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(
     articles[0].category
   );
@@ -55,6 +56,28 @@ export default function TpvInterface() {
     });
   };
 
+  const handleUpdateArticleLine = (formData: ArticleLine) => {
+    setArticlesLines((prevLines) => {
+      const existingIndex = prevLines.findIndex(
+        (line: ArticleLine) => line.id === formData.id
+      );
+      if (existingIndex != -1) {
+        const updatedLines = [...prevLines];
+        // Accedemos al articulo usando el indice que hemos obtenido anteriormente
+        const existingLine = { ...updatedLines[existingIndex] };
+        // Actualizamos las cantidades y totales
+        existingLine.details = formData.details;
+        existingLine.quantity = formData.quantity;
+        existingLine.price = formData.price;
+        existingLine.total = existingLine.quantity * existingLine.price;
+        // Actualizamos la linea y devolvemos el array actualizado para
+        // que se actualize en la función setArticlesLines
+        updatedLines[existingIndex] = existingLine;
+        return updatedLines;
+      }
+    });
+    setSelectedArticleLine(null);
+  };
   useEffect(() => {
     const aList = articles.filter(
       (article: Article) => article.category === selectedCategory
@@ -102,6 +125,7 @@ export default function TpvInterface() {
       (articleLine) => articleLine.id != selectedArticleLine.id
     );
     setArticlesLines(newArticlesLines);
+    setSelectedArticleLine(null);
   };
 
   return (
@@ -110,14 +134,14 @@ export default function TpvInterface() {
         id="tpv-interface"
         className="h-screen bg-stone-100 grid grid-cols-7 grid-rows-[1fr_auto_auto_auto_auto] text-black"
       >
-        <div className="col-start-1 col-end-4 row-start-1 row-end-2 justify-start items-center pb-4 overflow-y-scroll">
+        <div className="col-start-1 col-end-5 row-start-1 row-end-2 justify-start items-center pb-4 overflow-y-scroll">
           <ArticlesLineTable
             articlesLines={articlesLines}
             selectedArticleLine={selectedArticleLine}
             handleSelectArticleLine={handleSelectArticleLine}
           />
         </div>
-        <div className="col-start-1 col-end-4  row-start-2 row-end-3 bg-stone-600 text-stone-100 flex justify-end text-3xl py-4">
+        <div className="col-start-1 col-end-5  row-start-2 row-end-3 bg-stone-600 text-stone-100 flex justify-end text-3xl py-4">
           <h3>
             Total:{" "}
             <span className="font-semibold text-4xl">
@@ -133,14 +157,17 @@ export default function TpvInterface() {
             categorySelect={selectedCategory}
           />
         </div>
-        <div className="col-start-4 col-end-5 row-start-1 row-end-3">
+        <div className="col-start-5 col-end-6 row-start-1 row-end-3">
           <ArticleLinesTableAsideBtns
             selectedArticleLine={selectedArticleLine}
             handleDeleteLine={handleDeleteLine}
           />
         </div>
-        <div className="col-start-5 col-end-6 row-start-1 row-end-3 bg-stone-300">
-          Calculadora
+        <div className="col-start-6 col-end-7 row-start-1 row-end-3 bg-stone-300 rounded border border-stone-300">
+          <UpdateForm
+            selectedArticleLine={selectedArticleLine}
+            handleUpdateArticleLine={handleUpdateArticleLine}
+          />
         </div>
         <div className="col-start-3 col-end-7 row-start-3 row-end-6 bg-stone-300 m-2 rounded">
           <ArticlesSection
