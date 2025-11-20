@@ -1,6 +1,7 @@
 export type ArticleLine = {
     id: string,
     name: string,
+    details?: string,
     quantity: number,
     price: number,
     total: number
