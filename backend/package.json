@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "start": "node --watch index.js"
   },
   "keywords": [],
@@ -16,5 +16,8 @@
     "express": "^5.1.0",
     "node-thermal-printer": "^4.5.0",
     "serialport": "^13.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.8"
   }
 }
